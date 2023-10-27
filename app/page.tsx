@@ -176,17 +176,19 @@ export default function Home() {
           Calculate
         </button>
       </form>
+
       <div className="result bg-slate-300 my-3 p-3">
-        <p className="text-1xl font-bold text-gray-700">
-          <span>Weight: </span>
-          <span> {weight.value} </span>
-          <span> {weight.unit} </span>
-        </p>
         <p className="text-1xl font-bold text-gray-700">
           <span>Height: </span>
           <span> {height.value} </span>
           <span> {height.unit} </span>
         </p>
+        <p className="text-1xl font-bold text-gray-700">
+          <span>Weight: </span>
+          <span> {weight.value} </span>
+          <span> {weight.unit} </span>
+        </p>
+
         <p className={bmiStyles}>
           <span>BMI: </span>
           <span> {bmi.toFixed(2)} </span>
@@ -200,8 +202,8 @@ export default function Home() {
           <span> m </span>
         </p>
         <p className="text-1xl font-bold text-gray-700">
-          <span>Height: </span>
-          <span> {weightInKg.toFixed(2)} </span>
+          <span>Weight: </span>
+          <span> {weightInKg.toFixed(1)} </span>
           <span> kg </span>
         </p>
         <p className={bmiStyles}>
