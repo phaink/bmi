@@ -27,16 +27,17 @@ function getFeetInchesFromString(height: string): number[] {
   return [feet, inches];
 }
 
+// Component stars here
 export default function Home() {
   const lowerLimit = 18.5;
   const upperLimit = 24.5;
   const [height, setHeight] = useState<tState>({
-    value: "167",
-    unit: "cm",
+    value: `5'10"`,
+    unit: "ft-in",
   });
   const [weight, setWeight] = useState<tState>({
-    value: "60",
-    unit: "kg",
+    value: "154.5",
+    unit: "lbs",
   });
 
   const [bmi, setBmi] = useState(0);
@@ -58,10 +59,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    setBmi(calcBmi(height.value, weight.value));
-  }, []);
-
   const handleHeightChange = (e: tChange) => {
     const qty_name = e.target.name;
     const qty_val = e.target.value;
@@ -75,7 +72,7 @@ export default function Home() {
     }
   };
 
-  function covertUnits() {
+  function convertUnits() {
     let heightInMeters, weightInKg;
     if (height.unit === "cm") {
       heightInMeters = parseFloat(height.value) / 100;
@@ -98,12 +95,23 @@ export default function Home() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log("form submit event");
-    const { heightInMeters, weightInKg } = covertUnits();
-    const result = calcBmi(heightInMeters, weightInKg);
-    setBmi(result);
-    console.log("BMI: ", result);
+    const { heightInMeters, weightInKg } = convertUnits();
+    setBmi(calcBmi(heightInMeters, weightInKg));
   };
 
+  const { heightInMeters, weightInKg } = convertUnits();
+  useEffect(() => {
+    console.log("use effect called ");
+
+    setBmi(calcBmi(heightInMeters, weightInKg));
+  }, []);
+
+  const bmiStyles =
+    bmi > lowerLimit && bmi < upperLimit
+      ? "text-1xl font-bold text-emerald-500"
+      : "text-1xl font-bold text-red-500";
+
+  /* JSX */
   return (
     <main>
       <h1 className="text-center text-5xl font-extrabold text-emerald-500 m-5">
@@ -179,7 +187,7 @@ export default function Home() {
           <span> {height.value} </span>
           <span> {height.unit} </span>
         </p>
-        <p className="text-1xl font-bold text-gray-700">
+        <p className={bmiStyles}>
           <span>BMI: </span>
           <span> {bmi.toFixed(2)} </span>
         </p>
@@ -187,16 +195,16 @@ export default function Home() {
 
       <div id="si-units" className="bg-slate-300 my-3 p-3">
         <p className="text-1xl font-bold text-gray-700">
-          <span>Weight: </span>
-          <span> {weight.value} </span>
-          <span> {weight.unit} </span>
+          <span>Height: </span>
+          <span> {heightInMeters.toFixed(4)} </span>
+          <span> m </span>
         </p>
         <p className="text-1xl font-bold text-gray-700">
           <span>Height: </span>
-          <span> {height.value} </span>
-          <span> {height.unit} </span>
+          <span> {weightInKg.toFixed(2)} </span>
+          <span> kg </span>
         </p>
-        <p className="text-1xl font-bold text-gray-700">
+        <p className={bmiStyles}>
           <span>BMI: </span>
           <span> {bmi.toFixed(2)} </span>
         </p>
