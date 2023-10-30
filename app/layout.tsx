@@ -1,4 +1,5 @@
 
+import { ThemeProvider } from '@/context/Context'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import './globals.css'
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`relative bg-blueGray-200 pt-8 pb-6 ${inter.className}`}>
-        <Header />
-        {children}
-        <Footer />
+        <ThemeProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
